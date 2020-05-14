@@ -1,0 +1,9 @@
+export const REG_ACTION='REGISTER_USER';
+export const REG_SUC='REGISTER_SUCCESS';
+export const REG_FAL='REGISTER_FAILURE';
+export const REG_RESET='REGISTER_RESET';
+
+export const LOGIN_ACTION='LOGIN_USER';
+export const LOGIN_SUC='LOGIN_SUCCESS';
+export const LOGIN_FAL='LOGIN_FAILURE';
+export const LOGIN_RESET='LOGIN_RESET';
