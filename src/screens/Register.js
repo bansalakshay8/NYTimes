@@ -13,6 +13,7 @@ import IconF from "react-native-vector-icons/Fontisto";
 import IconFA from "react-native-vector-icons/FontAwesome";
 import IconI from "react-native-vector-icons/Ionicons";
 import { Image } from "react-native-elements";
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import { regAction,resetRegAction } from "../actions/index";
 import { connect } from "react-redux";
@@ -33,6 +34,14 @@ class Register extends Component {
   render() {
     return (
       <View style={Styles.container}>
+        <Spinner
+          //visibility of Overlay Loading Spinner
+          visible={this.props.regLoading}
+          //Text with the Spinner 
+          textContent={'Registering user...'}
+          //Text style of the Spinner Text
+          textStyle={{color: '#FFF'}}
+        />
         <IconI name="md-arrow-round-back" size={25} color="black" style={{marginLeft:10,marginTop:10}} onPress={() => this.backPress()} />
         <View style={Styles.logoStyle}>
           <Image

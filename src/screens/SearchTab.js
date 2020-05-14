@@ -1,0 +1,26 @@
+import React,{Component} from 'react';
+import {View,Text,Button,StyleSheet} from 'react-native';
+
+class SearchTab extends Component{
+
+    render(){
+        return(
+            <View style={styles.container}>
+                <Text>
+                    SEARCH TAB
+                </Text>
+            </View>
+        )       
+    }
+}
+
+const styles= StyleSheet.create({
+    container:{
+        flex:1,
+        alignItems:'center',
+        justifyContent:'center',
+        backgroundColor: "#9a9a9a",
+    }
+})
+
+export default SearchTab;

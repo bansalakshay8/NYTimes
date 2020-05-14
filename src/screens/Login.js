@@ -11,6 +11,8 @@ import {
 import IconF from "react-native-vector-icons/Fontisto";
 import { Image } from "react-native-elements";
 import { connect } from "react-redux";
+import Spinner from 'react-native-loading-spinner-overlay';
+
 import {resetLoginAction,loginAction} from '../actions'
 
 
@@ -34,6 +36,15 @@ class Login extends Component {
   render() {
     return (
       <View style={Styles.container}>
+
+        <Spinner
+          //visibility of Overlay Loading Spinner
+          visible={this.props.loading}
+          //Text with the Spinner 
+          textContent={'Signing in...'}
+          //Text style of the Spinner Text
+          textStyle={{color: '#FFF',}}
+        />
         <View style={Styles.logoStyle}>
           <Image
             source={require("../images/nyt_logo.png")}

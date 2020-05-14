@@ -1,32 +1,65 @@
-import React,{Component} from 'react';
-import {View,Text} from 'react-native';
-import { connect } from "react-redux";
+/* eslint-disable prettier/prettier */
+import React from 'react';
+import {View} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {createAppContainer} from 'react-navigation';
+//import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 
-class Dashboard extends Component{
-    render(){
-        return(
-            <View>
-                <Text>This is Dashboard: {this.props.userToken}</Text>
-            </View>
-        )
+import WorldTab from './WorldTab';
+import ScienceTab from './ScienceTab';
+import SearchTab from './SearchTab';
+
+
+
+const dashNavigator = createMaterialTopTabNavigator(
+    {
+        WorldTab: { 
+        screen: WorldTab,
+        navigationOptions: {
+          title:'World',
+        } 
+      },
+      ScienceTab: { 
+        screen: ScienceTab,
+        navigationOptions: {
+          title:'Science',
+        } 
+      },
+      SearchTab: { 
+        screen: SearchTab,
+        navigationOptions: {
+          title:'Search News',
+        }
+      },
+    },
+    {
+      initialRouteName: 'WorldTab',
+      animationEnabled: true,
+      activeColor: '#f0edf6',
+      inactiveColor: '#3e2465',
+      swipeEnabled: true,
+      tabBarOptions: {
+        // activeTintColor: '#FFFFFF',
+        // inactiveTintColor: '#F8F8F8',
+        style: {
+          backgroundColor: '#b30000',
+        },
+        labelStyle: {
+          textAlign: 'center',
+        },
+        indicatorStyle: {
+          borderBottomColor: '#FFF',
+          borderBottomWidth: 1.5 ,
+        },
+      },
     }
-}
-
-
-const mapStateToProps = (state) => {
+  );
+  dashNavigator.navigationOptions = ({ navigation }) => {
     return {
-      userToken: state.loginReducer.userToken,
+      title: 'My New Title',
     };
   };
   
-  const mapDispatchToProps = (dispatch) => {
-    return {
-      doLogin: (credentials) => {
-        dispatch(loginAction(credentials));
-      },
-    };
-  };
-
-
-const DashboardContainer = connect(mapStateToProps, mapDispatchToProps)(Dashboard);
-export default DashboardContainer;
+  export default createAppContainer(dashNavigator);
+  

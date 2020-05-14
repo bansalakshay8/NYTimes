@@ -8,6 +8,7 @@
  */
 
 import React from "react";
+import {View} from 'react-native';
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 
@@ -15,12 +16,28 @@ import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
 import Dashboard from "./src/screens/Dashboard";
 
+import Icon from "react-native-vector-icons/AntDesign";
 
 const App = createStackNavigator(
   {
     Login: { screen: Login },
     Register : {screen: Register},
-    Dashboard : {screen: Dashboard}
+    Dashboard : {
+      screen: Dashboard,
+      navigationOptions: {
+        title: "NEW YORK TIMES",
+        headerStyle: {
+          backgroundColor: '#9a9a9a',
+        },
+        headerTitleAlign:'center',
+        headerLeft: null,
+        headerRight:({}) => (
+          <View>
+            <Icon style={{marginRight:10 }} size={20} name={'poweroff'}/>
+          </View>
+        )
+      },
+    }
   },
   {
     initialRouteName: "Login",

@@ -1,5 +1,4 @@
-import {REG_ACTION,REG_RESET,LOGIN_ACTION,LOGIN_LOGOUT} from './ActionTypes';
-import { cos } from 'react-native-reanimated';
+import {REG_ACTION,REG_RESET,LOGIN_ACTION,LOGIN_LOGOUT,FETCH_NEWS_ACTION,FETCH_NEWS_RESET} from './ActionTypes';
 
 
 export const regAction=(credentials)=>{
@@ -26,6 +25,16 @@ export const resetLoginAction=()=>{
     }
 }
 
-
+export const fetchNewsAction=(searchTerm)=>{
+    return{
+        type:FETCH_NEWS_ACTION,
+        payload:searchTerm
+    }
+}
+export const resetNewsAction=()=>{
+    return{
+        type:FETCH_NEWS_RESET
+    }
+}
 
 

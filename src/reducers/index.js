@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 import authReducer from "./authReducer";
 import loginReducer from "./loginReducer";
-import searchReducer from "./searchReducer";
+import newsReducer from "./newsReducer";
 
 const allReducers = combineReducers({
   authReducer,
   loginReducer,
-  searchReducer,
+  newsReducer
 });
 
 export default allReducers;
