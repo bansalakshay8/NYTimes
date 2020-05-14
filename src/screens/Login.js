@@ -75,6 +75,13 @@ class Login extends Component {
               }}
             ></TextInput>
           </View>
+          {this.props.error == "" &&
+          this.props.loading == false &&
+          this.props.loggedIn == true &&
+          this.props.userToken != "" ? (
+            this.props.navigation.navigate('Dashboard')
+          ) : (<Text style={{color: '#b30000'}}>{this.props.error}</Text>
+          )}
           <TouchableOpacity style={Styles.loginBtnStyle} onPress={this.loginPressed}>
             <Text style={{ color: "white", textAlign: "center", fontSize: 16 }}>
               Login
@@ -182,8 +189,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     doLogin: (credentials) => {
-      //   console.log(`username is :${credentials.email} ${credentials.password}`);
-      dispatch(loginAction());
+      dispatch(loginAction(credentials));
     },
   };
 };

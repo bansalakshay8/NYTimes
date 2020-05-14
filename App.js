@@ -13,11 +13,14 @@ import { createStackNavigator } from "react-navigation-stack";
 
 import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
+import Dashboard from "./src/screens/Dashboard";
+
 
 const App = createStackNavigator(
   {
     Login: { screen: Login },
-    Register : {screen: Register}
+    Register : {screen: Register},
+    Dashboard : {screen: Dashboard}
   },
   {
     initialRouteName: "Login",

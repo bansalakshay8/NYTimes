@@ -6,4 +6,4 @@ export const REG_RESET='REGISTER_RESET';
 export const LOGIN_ACTION='LOGIN_USER';
 export const LOGIN_SUC='LOGIN_SUCCESS';
 export const LOGIN_FAL='LOGIN_FAILURE';
-export const LOGIN_RESET='LOGIN_RESET';
+export const LOGIN_LOGOUT='LOGIN_LOGOUT';

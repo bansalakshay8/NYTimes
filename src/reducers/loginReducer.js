@@ -2,24 +2,24 @@ import {
   LOGIN_ACTION,
   LOGIN_SUC,
   LOGIN_FAL,
-  LOGIN_RESET,
+  LOGIN_LOGOUT,
 } from "../actions/ActionTypes";
 
 const initialState = {
   loggedIn: false,
   error: "",
-  userToken:"" ,
+  userToken: "",
   loading: false,
 };
 
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {
-    case REG_ACTION:
+    case LOGIN_ACTION:
       return {
         ...state,
         loading: true,
       };
-    case REG_SUC:
+    case LOGIN_SUC:
       return {
         ...state,
         loggedIn: true,
@@ -27,7 +27,7 @@ const loginReducer = (state = initialState, action) => {
         userToken: action.payload,
         loading: false,
       };
-    case REG_FAL:
+    case LOGIN_FAL:
       return {
         ...state,
         loggedIn: false,
@@ -35,13 +35,14 @@ const loginReducer = (state = initialState, action) => {
         userToken: "",
         loading: false,
       };
-    case REG_RESET:
-      return { ...state, 
-        loggedIn: false, 
-        error: "", 
-        userToken: "", 
-        loading: false 
-    };
+    case LOGIN_LOGOUT:
+      return {
+        ...state,
+        loggedIn: false,
+        error: "",
+        userToken: "",
+        loading: false,
+      };
     default:
       return state;
   }

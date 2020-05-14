@@ -1,4 +1,5 @@
-import {REG_ACTION,REG_RESET,LOGIN_ACTION,LOGIN_RESET} from './ActionTypes';
+import {REG_ACTION,REG_RESET,LOGIN_ACTION,LOGIN_LOGOUT} from './ActionTypes';
+import { cos } from 'react-native-reanimated';
 
 
 export const regAction=(credentials)=>{
@@ -21,7 +22,7 @@ export const loginAction=(credentials)=>{
 }
 export const resetLoginAction=()=>{
     return{
-        type:LOGIN_RESET
+        type:LOGIN_LOGOUT
     }
 }
 
