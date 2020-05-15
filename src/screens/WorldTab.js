@@ -1,52 +1,44 @@
 import React, { Component } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
-import { connect } from "react-redux";
-// import Spinner from 'react-native-loading-spinner-overlay';
-import Icon from "react-native-vector-icons/MaterialIcons";
-import { fetchNewsAction, resetNewsAction } from "../actions";
-import NewsCard from "../components/NewsCard";
+import CatergorizedNews from "../components/CategorizedNews";
 
 class WorldTab extends Component {
-  checkError = () => {
-    const { searchCompleted, searching, searchError } = this.props;
-    if (searchCompleted == true && searching == false && searchError != "") {
-      return (
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Icon name="error-outline" size={16} color="black" />
-          <Text>{searchError}</Text>
-        </View>
-      );
-    }
-    // return (<Text>WORLD</Text>)
-  };
+  constructor(props) {
+    super(props);
+    this.state={
+      shouldShow: false
+    };
+  }
 
-  render() {
+  shouldFetchNews=()=>{
+    if(this.state.shouldShow){
+      return <CatergorizedNews searchTerm="world"/>
+    }
+  } 
+
+  render(){
     return (
       <View style={styles.container}>
-        {this.checkError()}
-        {this.props.searchCompleted == true &&
-          this.props.searching == false &&
-          this.props.searchError == "" && (
-            <NewsCard newsData={this.props.searchResult[0]} />
-          )}
+        {this.shouldFetchNews()}
       </View>
-    );
+    )
   }
   componentDidMount() {
     const { navigation } = this.props;
     this.focusListener = navigation.addListener("didFocus", () => {
-      this.props.resetNews();
-      this.props.fetchNews({ searchText: "world" });
+      this.setState({
+        shouldShow:true
+      });
+    });
+    this.blurListener = navigation.addListener("didBlur", () => {
+      this.setState({
+        shouldShow:false
+      });
     });
   }
   componentWillUnmount() {
     this.focusListener.remove();
+    this.blurListener.remove();
   }
 }
 
@@ -59,26 +51,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state) => {
-  return {
-    searchError: state.newsReducer.searchError,
-    searchResult: state.newsReducer.searchResult,
-    searchCompleted: state.newsReducer.searchCompleted,
-    searching: state.newsReducer.searching,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchNews: (searchTerm) => {
-      console.log("FETCH NEWS VIEW");
-      dispatch(fetchNewsAction(searchTerm));
-    },
-    resetNews: () => {
-      dispatch(resetNewsAction());
-    },
-  };
-};
-
-const worldContainer = connect(mapStateToProps, mapDispatchToProps)(WorldTab);
-export default worldContainer;
+export default WorldTab;

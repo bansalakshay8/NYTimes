@@ -1,6 +1,5 @@
 import axios from "axios";
 export async function makeRegisterCall(params) {
-  console.log("in register api");
   return await axios({
     method: "post",
     url: "http://192.168.43.244:8000/auth/register",
@@ -15,7 +14,6 @@ export async function makeRegisterCall(params) {
 }
 
 export async function makeLoginCall(params) {
-  console.log("in login api");
   return await axios({
     method: "post",
     url: "http://192.168.43.244:8000/auth/login",
@@ -31,7 +29,9 @@ export async function makeLoginCall(params) {
 
 export async function makeSearchCall(params) {
   let NYURL = `https://api.nytimes.com/svc/topstories/v2/${params.searchText}.json?api-key=ieafWZelkDeAP0YI9UbeNFTFFyvdfeBn`;
-  // if (params.searchText == "world") {
+
+  console.log('URL is:'+NYURL)
+    // if (params.searchText == "world") {
   //   NYURL =
   //     "https://api.nytimes.com/svc/topstories/v2/world.json?api-key=ieafWZelkDeAP0YI9UbeNFTFFyvdfeBn";
   // }

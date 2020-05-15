@@ -21,7 +21,6 @@ const newsReducer = (state = initialState, action) => {
     case FETCH_NEWS_FAIL:
       return { ...state, searchError: action.payload, searchResult: "",searchCompleted:true,searching:false };
     case FETCH_NEWS_RESET:
-      console.log('resetting news')
       return { ...state, searchError: "", searchResult: "",searchCompleted:false,searching:false };
     default:
       return state;

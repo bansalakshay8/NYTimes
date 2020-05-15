@@ -12,14 +12,15 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { fetchNewsAction, resetNewsAction } from "../actions";
 import NewsList from "./NewsList";
 
-class CatergorizedNews extends Component {
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (nextProps.isSearchTab == true) {
-  //     return { fromSearchTab: true };
-  //   } else return null;
-  // }
+class SearchFromTab extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      shouldSearch: false,
+      searchTerm: "",
+    };
+  }
   checkError = () => {
-    console.log('for checking activity indicator')
     const { searchCompleted, searching, searchError } = this.props;
     if (searchCompleted == true && searching == false && searchError != "") {
       return (
@@ -44,28 +45,40 @@ class CatergorizedNews extends Component {
   };
 
   render() {
-    if (this.props.searchTerm == "") {
-      return (
-        <View style={styles.container}>
-          <Text>Search news</Text>
-        </View>
-      );
-    } else {
-      if (this.props.searching == true && this.props.searchCompleted == false) {
+    if (this.state.shouldSearch)
+      if (this.props.searchTerm == "") {
         return (
           <View style={styles.container}>
-            <ActivityIndicator size="large" color="#b30000" />
-            <Text style={{ color: "#b30000" }}>Fetching news</Text>
+            <Text>Search news</Text>
           </View>
         );
       } else {
-        return <View style={styles.container}>{this.checkError()}</View>;
+        if (
+          this.props.searching == true &&
+          this.props.searchCompleted == false
+        ) {
+          return (
+            <View style={styles.container}>
+              <ActivityIndicator size="large" color="#b30000" />
+              <Text style={{ color: "#b30000" }}>Fetching news</Text>
+            </View>
+          );
+        } else {
+          return <View style={styles.container}>{this.checkError()}</View>;
+        }
       }
-    }
   }
   componentDidMount() {
     this.props.resetNews();
+    this.setState({
+      searchTerm: this.props.searchTerm,
+    });
     this.props.fetchNews({ searchText: this.props.searchTerm });
+  }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.searchTerm !== prevState.searchTerm) {
+      return { shouldSearch: true };
+    } else return null;
   }
 }
 
@@ -98,8 +111,8 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const catNewsContainer = connect(
+const sftContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(CatergorizedNews);
-export default catNewsContainer;
+)(SearchFromTab);
+export default sftContainer;

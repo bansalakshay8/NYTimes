@@ -68,8 +68,6 @@ export function* fetchNews(action) {
   try {
     const response = yield call(makeSearchCall,action.payload);
 
-    console.log('search SAGA');
-    console.log(response);
     if(response.status=="OK"){
       yield put({ type: FETCH_NEWS_SUCS, payload: response.results })
     }else{
