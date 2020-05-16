@@ -46,3 +46,24 @@ export async function makeSearchCall(params) {
       return error;
     });
 }
+
+
+export async function makeCustomSearch(params) {
+  let NYURL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${params}&api-key=ieafWZelkDeAP0YI9UbeNFTFFyvdfeBn`;
+
+  console.log('make custom search URL is:'+NYURL)
+    // if (params.searchText == "world") {
+  //   NYURL =
+  //     "https://api.nytimes.com/svc/topstories/v2/world.json?api-key=ieafWZelkDeAP0YI9UbeNFTFFyvdfeBn";
+  // }
+  return await axios({
+    method: "get",
+    url: NYURL,
+  })
+    .then((response) => {
+      return response.data;
+    })
+    .catch(function (error) {
+      return error;
+    });
+}

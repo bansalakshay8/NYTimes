@@ -2,17 +2,27 @@ import React, { Component } from "react";
 import { View, Text, Button, StyleSheet, TextInput } from "react-native";
 import { SearchBar } from "react-native-elements";
 import IconF from "react-native-vector-icons/Fontisto";
-import SearchFromTab from "../components/SearchFromTab";
+import SearchResultComp from "../components/SearchResultComp";
+import { connect } from "react-redux";
+
+import { fetchCustomNewsAction, resetCustomNewsAction } from "../actions";
 
 class SearchTab extends Component {
   constructor(props) {
     super(props);
     this.state = {
       searchTerm: "",
-      shouldShow: false,
     };
   }
   render() {
+    const {
+      searchError,
+      searchResult,
+      searchCompleted,
+      searching,
+      // searchedWords
+    } = this.props;
+
     return (
       <View style={styles.container}>
         <SearchBar
@@ -28,37 +38,39 @@ class SearchTab extends Component {
           inputContainerStyle={styles.searchInputContainerStyle}
           inputStyle={styles.searchInputStyle}
         />
-        {this.state.shouldShow && (
-          <SearchFromTab
-            searchTerm={this.state.searchTerm}
-          />
-        )}
+        <SearchResultComp
+          searchErr={searchError}
+          searchRes={searchResult}
+          searchComp={searchCompleted}
+          searching={searching}
+        />
       </View>
     );
   }
 
   searchChanged = (searchTerm) => {
+      
     this.setState({
-      searchTerm: searchTerm,
-      shouldShow: true,
+      searchTerm,
+    },()=>{
+        if(this.state.searchTerm!=''){
+            this.props.fetchNews(searchTerm);
+        }else{
+            this.props.resetNews();
+        }
     });
+    // console.log("checking search 1");
   };
-
   componentDidMount() {
     const { navigation } = this.props;
-    //   this.focusListener = navigation.addListener("didFocus", () => {
-    //     this.setState({
-    //       shouldShow: true,
-    //     });
-    //   });
     this.blurListener = navigation.addListener("didBlur", () => {
       this.setState({
-        searchTerm: "",
+        searchTerm:""
       });
+      this.props.resetNews();
     });
   }
   componentWillUnmount() {
-    this.focusListener.remove();
     this.blurListener.remove();
   }
 }
@@ -72,6 +84,7 @@ const styles = StyleSheet.create({
   },
   searchInputStyle: {
     color: "#000",
+    paddingVertical: 0,
   },
   searchInputContainerStyle: {
     backgroundColor: "#fff",
@@ -80,7 +93,7 @@ const styles = StyleSheet.create({
   },
   searchContainerStyle: {
     width: "100%",
-    marginVertical: 10,
+    marginTop: 10,
     backgroundColor: "#9a9a9a",
     borderBottomWidth: 0,
     borderTopWidth: 0,
@@ -88,4 +101,30 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchTab;
+const mapStateToProps = (state) => {
+  return {
+    searchError: state.searchReducer.searchError,
+    searchResult: state.searchReducer.searchResult,
+    searchCompleted: state.searchReducer.searchCompleted,
+    searching: state.searchReducer.searching,
+    // searchedWords : state.searchReducer.searchedWords
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchNews: (searchTerm) => {
+    //   console.log("checking search 5");
+      dispatch(fetchCustomNewsAction(searchTerm));
+    },
+    resetNews: () => {
+      dispatch(resetCustomNewsAction());
+    },
+  };
+};
+
+const searchTabContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SearchTab);
+export default searchTabContainer;

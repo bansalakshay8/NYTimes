@@ -7,7 +7,12 @@ import {
   takeEvery,
 } from "redux-saga/effects";
 import axios from "axios";
-import { makeRegisterCall, makeLoginCall,makeSearchCall } from "../apis/api";
+import {
+  makeRegisterCall,
+  makeLoginCall,
+  makeSearchCall,
+  makeCustomSearch,
+} from "../apis/api";
 import {
   REG_ACTION,
   REG_SUC,
@@ -17,14 +22,17 @@ import {
   LOGIN_FAL,
   FETCH_NEWS_ACTION,
   FETCH_NEWS_SUCS,
-  FETCH_NEWS_FAIL
+  FETCH_NEWS_FAIL,
+  CUSTOM_NEWS_ACTION,
+  CUSTOM_NEWS_SUCS,
+  CUSTOM_NEWS_FAIL,
 } from "../actions/ActionTypes";
 
 export function* registerUser(action) {
   try {
     let params = {
-      "email": action.payload.email,
-      "password": action.payload.password,
+      email: action.payload.email,
+      password: action.payload.password,
     };
 
     // const response = yield axios.post("http://localhost:8000/auth/register", params);
@@ -44,16 +52,16 @@ export function* registerUser(action) {
 export function* loginUser(action) {
   try {
     let params = {
-      "email": action.payload.email,
-      "password": action.payload.password,
+      email: action.payload.email,
+      password: action.payload.password,
     };
-    const response = yield call(makeLoginCall,params);
+    const response = yield call(makeLoginCall, params);
     // console.log("In Login SAGA");
     // console.log(response);
     if (response.access_token == undefined) {
-      if(response.message != undefined){
+      if (response.message != undefined) {
         yield put({ type: LOGIN_FAL, payload: response.message });
-      }else{
+      } else {
         yield put({ type: LOGIN_FAL, payload: "Issue while signing-in" });
       }
     } else {
@@ -66,15 +74,34 @@ export function* loginUser(action) {
 
 export function* fetchNews(action) {
   try {
-    const response = yield call(makeSearchCall,action.payload);
+    const response = yield call(makeSearchCall, action.payload);
 
-    if(response.status=="OK"){
-      yield put({ type: FETCH_NEWS_SUCS, payload: response.results })
-    }else{
-      yield put({ type: FETCH_NEWS_FAIL, payload: 'Unable to fetch news' })
+    if (response.status == "OK") {
+      yield put({ type: FETCH_NEWS_SUCS, payload: response.results });
+    } else {
+      yield put({ type: FETCH_NEWS_FAIL, payload: "Unable to fetch news" });
     }
   } catch (error) {
-     yield put({ type: FETCH_NEWS_FAIL, payload: "Issue while fetching news" });
+    yield put({ type: FETCH_NEWS_FAIL, payload: "Issue while fetching news" });
+  }
+}
+
+export function* fetchCustomNews(action) {
+  try {
+    const resp = yield call(makeCustomSearch, action.payload);
+    if (resp.status == "OK") {
+      yield put({ type: CUSTOM_NEWS_SUCS, payload: resp.response.docs });
+    } else {
+      yield put({
+        type: CUSTOM_NEWS_FAIL,
+        payload: "Issue while searching news",
+      });
+    }
+  } catch (error) {
+    yield put({
+      type: CUSTOM_NEWS_FAIL,
+      payload: "Issue while searching news",
+    });
   }
 }
 
@@ -89,7 +116,14 @@ export function* loginWatcher() {
 export function* fetchNewsWatcher() {
   yield takeLatest(FETCH_NEWS_ACTION, fetchNews);
 }
-
+export function* customSearchWatcher() {
+  yield takeLatest(CUSTOM_NEWS_ACTION, fetchCustomNews);
+}
 export default function* rootSaga() {
-  yield all([call(regWatcher), call(loginWatcher),call(fetchNewsWatcher)]);
+  yield all([
+    call(regWatcher),
+    call(loginWatcher),
+    call(fetchNewsWatcher),
+    call(customSearchWatcher),
+  ]);
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, FlatList, Text, View, Alert } from "react-native";
-import NewsCard from './NewsCard';
+import NewsCard from "./NewsCard";
 
 export default class NewsList extends React.Component {
   constructor(props) {
@@ -13,9 +13,9 @@ export default class NewsList extends React.Component {
       <View style={styles.MainContainer}>
         <FlatList
           data={this.props.data}
-          renderItem={({ item }) => (
-            <NewsCard newsData={item}></NewsCard>
-          )}
+          renderItem={({ item }) => 
+            <NewsCard newsData={item} customSearch={this.props.customSearch}></NewsCard>
+          }
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
@@ -26,5 +26,6 @@ const styles = StyleSheet.create({
   MainContainer: {
     justifyContent: "center",
     flex: 1,
+    marginVertical:10
   },
 });

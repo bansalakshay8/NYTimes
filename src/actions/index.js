@@ -1,4 +1,4 @@
-import {REG_ACTION,REG_RESET,LOGIN_ACTION,LOGIN_LOGOUT,FETCH_NEWS_ACTION,FETCH_NEWS_RESET} from './ActionTypes';
+import {REG_ACTION,REG_RESET,LOGIN_ACTION,LOGIN_LOGOUT,FETCH_NEWS_ACTION,FETCH_NEWS_RESET,CUSTOM_NEWS_ACTION,CUSTOM_NEWS_RESET} from './ActionTypes';
 
 
 export const regAction=(credentials)=>{
@@ -38,3 +38,15 @@ export const resetNewsAction=()=>{
 }
 
 
+export const fetchCustomNewsAction=(searchTerm)=>{
+    // console.log('checking search 6')
+    return{
+        type:CUSTOM_NEWS_ACTION,
+        payload:searchTerm
+    }
+}
+export const resetCustomNewsAction=()=>{
+    return{
+        type:CUSTOM_NEWS_RESET
+    }
+}
