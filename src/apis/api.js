@@ -48,10 +48,10 @@ export async function makeSearchCall(params) {
 }
 
 
-export async function makeCustomSearch(params) {
+export async function makeCustomSearch(payloadObj) {
 
-  let queryString=params.trim().split(" ").join("+");
-  let NYURL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${queryString}&sort=newest&api-key=ieafWZelkDeAP0YI9UbeNFTFFyvdfeBn`;
+  let queryString=payloadObj.searchTerm.trim().split(" ").join("+");
+  let NYURL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${queryString}&page=${payloadObj.index}&sort=newest&api-key=ieafWZelkDeAP0YI9UbeNFTFFyvdfeBn`;
 
   console.log('make custom search URL is:'+NYURL)
     // if (params.searchText == "world") {

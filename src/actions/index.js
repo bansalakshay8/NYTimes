@@ -38,11 +38,11 @@ export const resetNewsAction=()=>{
 }
 
 
-export const fetchCustomNewsAction=(searchTerm)=>{
+export const fetchCustomNewsAction=(searchObject)=>{
     // console.log('checking search 6')
     return{
         type:CUSTOM_NEWS_ACTION,
-        payload:searchTerm
+        payload:searchObject
     }
 }
 export const resetCustomNewsAction=()=>{

@@ -12,11 +12,18 @@ import { fetchCustomNewsAction, resetCustomNewsAction } from "../actions";
 import NewsList from "./NewsList";
 
 class SearchResultComp extends Component {
+  loadMoreHandler = () => {
+    this.props.searchMore();
+  };
   render() {
-    // console.log('checking search 4')
-    const { searching, searchComp, searchRes, searchErr } = this.props;
-    if (searching == true && searchComp == false) {
-      // console.log('checking search 2')
+    const {
+      searching,
+      searchComp,
+      searchRes,
+      searchErr,
+      searchingMore,
+    } = this.props;
+    if (searching == true && searchComp == false && searchingMore == false) {
       return (
         <View style={styles.container}>
           <ActivityIndicator size="large" color="#b30000" />
@@ -31,32 +38,46 @@ class SearchResultComp extends Component {
     ) {
       return (
         <View style={styles.container}>
-          <NewsList data={searchRes} customSearch={true} />
+          <NewsList
+            data={searchRes}
+            customSearch={true}
+            loadMore={this.loadMoreHandler}
+          />
         </View>
       );
-    } else if (
-      searching == false &&
-      searchComp == true &&
-      searchErr != ""
-    ) {
+    } else if (searching == false && searchComp == true && searchErr != "") {
       return (
         <View
-          style={[styles.container,{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }]}
+          style={[
+            styles.container,
+            {
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          ]}
         >
           <Icon name="error-outline" size={16} color="black" />
           <Text>{searchErr}</Text>
         </View>
       );
+    } else if (
+      searching == true &&
+      searchComp == false &&
+      searchingMore == true
+    ) {
+      return (
+        <View style={styles.container}>
+          <NewsList
+            data={searchRes}
+            customSearch={true}
+            loadMore={this.loadMoreHandler}
+          />
+          <ActivityIndicator size="small" color="#b30000" />
+          <Text style={{ color: "#b30000" }}>Loading more news</Text>
+        </View>
+      );
     } else {
-        console.log(this.props.searching)
-        console.log(this.props.searchComp)
-        console.log(this.props.searchRes)
-        console.log(this.props.searchErr)
-      // console.log('checking search 3')
       return null;
     }
   }

@@ -7,7 +7,9 @@ export default class NewsList extends React.Component {
     super(props);
     this.state = {};
   }
-
+  loadMoreData=()=>{
+    this.props.loadMore()
+  }
   render() {
     return (
       <View style={styles.MainContainer}>
@@ -16,7 +18,9 @@ export default class NewsList extends React.Component {
           renderItem={({ item }) => 
             <NewsCard newsData={item} customSearch={this.props.customSearch}></NewsCard>
           }
+          onEndReached={() => this.loadMoreData()}
           keyExtractor={(item, index) => index.toString()}
+          // ListFooterComponent={this.renderFooter()}
         />
       </View>
     );

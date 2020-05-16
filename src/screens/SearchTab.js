@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, Button, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { SearchBar } from "react-native-elements";
 import IconF from "react-native-vector-icons/Fontisto";
 import SearchResultComp from "../components/SearchResultComp";
@@ -12,6 +19,8 @@ class SearchTab extends Component {
     super(props);
     this.state = {
       searchTerm: "",
+      index: 0,
+      searchingMore: false,
     };
   }
   render() {
@@ -20,7 +29,7 @@ class SearchTab extends Component {
       searchResult,
       searchCompleted,
       searching,
-      // searchedWords
+      searchedWords,
     } = this.props;
 
     return (
@@ -38,34 +47,99 @@ class SearchTab extends Component {
           inputContainerStyle={styles.searchInputContainerStyle}
           inputStyle={styles.searchInputStyle}
         />
+        {searchedWords.length > 0 && (
+          <View
+            style={{
+              alignSelf: "flex-start",
+              marginHorizontal: 10,
+              flexDirection: "row",
+              flexWrap: 'wrap'
+            }}
+          >
+            <Text style={{color:'#fff'}}>Recent Searches :</Text>
+            {searchedWords.map((word) => {
+              return (
+                <TouchableOpacity onPress={()=>{
+                  this.pressedHistory(word)
+                }}>
+                  <View
+                    style={{
+                      backgroundColor: "#b30000",
+                      marginHorizontal: 5,
+                      borderRadius: 5,
+                    }}
+                    on
+                  >
+                    <Text style={{ padding: 3, fontSize: 12, color: "#fff" }}>
+                      {word}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        )}
         <SearchResultComp
           searchErr={searchError}
           searchRes={searchResult}
           searchComp={searchCompleted}
           searching={searching}
+          searchMore={this.searchMoreHandler}
+          searchingMore={this.state.searchingMore}
         />
       </View>
     );
   }
+  searchMoreHandler = () => {
+    this.setState(
+      {
+        index: this.state.index + 1,
+        searchingMore: true,
+      },
+      () => {
+        this.props.fetchNews({
+          searchTerm: this.state.searchTerm,
+          index: this.state.index,
+        });
+      },
+    );
+  };
 
-  searchChanged = (searchTerm) => {
-      
+  
+  pressedHistory=(word)=>{
     this.setState({
-      searchTerm,
+      searchTerm:word,
+      index: 0,
+      searchingMore: false,
     },()=>{
-        if(this.state.searchTerm!=''){
-            this.props.fetchNews(searchTerm);
-        }else{
-            this.props.resetNews();
+      this.props.fetchNews({ searchTerm:this.state.searchTerm, index: this.state.index });
+    })
+  }
+  searchChanged = (searchTerm) => {
+    //console.log('inside searchChanged')
+    this.setState(
+      {
+        searchTerm,
+        index: 0,
+        searchingMore: false,
+      },
+      () => {
+        if (this.state.searchTerm != "") {
+          this.props.fetchNews({ searchTerm, index: this.state.index });
+        } else {
+          this.props.resetNews();
         }
-    });
+      },
+    );
     // console.log("checking search 1");
   };
   componentDidMount() {
     const { navigation } = this.props;
     this.blurListener = navigation.addListener("didBlur", () => {
       this.setState({
-        searchTerm:""
+        searchTerm: "",
+        index: 0,
+        searchingMore: false,
       });
       this.props.resetNews();
     });
@@ -107,15 +181,15 @@ const mapStateToProps = (state) => {
     searchResult: state.searchReducer.searchResult,
     searchCompleted: state.searchReducer.searchCompleted,
     searching: state.searchReducer.searching,
-    // searchedWords : state.searchReducer.searchedWords
+    searchedWords: state.searchReducer.searchedWords,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchNews: (searchTerm) => {
-    //   console.log("checking search 5");
-      dispatch(fetchCustomNewsAction(searchTerm));
+    fetchNews: (searchObject) => {
+      //   console.log("checking search 5");
+      dispatch(fetchCustomNewsAction(searchObject));
     },
     resetNews: () => {
       dispatch(resetCustomNewsAction());

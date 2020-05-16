@@ -39,7 +39,7 @@ class NewsCard extends Component {
         <Card containerStyle={{ padding: 0, borderRadius: 10,flex:1 }}>
           <Text
             style={{
-              paddingHorizontal: 10,
+              paddingHorizontal: 20,
               paddingTop: 10,
               textAlign: "center",
               fontWeight: "bold",

@@ -19,7 +19,7 @@ class CatergorizedNews extends Component {
   //   } else return null;
   // }
   checkError = () => {
-    console.log('for checking activity indicator')
+    //console.log('for checking activity indicator')
     const { searchCompleted, searching, searchError } = this.props;
     if (searchCompleted == true && searching == false && searchError != "") {
       return (
