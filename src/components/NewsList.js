@@ -8,7 +8,9 @@ export default class NewsList extends React.Component {
     this.state = {};
   }
   loadMoreData=()=>{
-    this.props.loadMore()
+    if(this.props.loadMore !=undefined){
+      this.props.loadMore()
+    }
   }
   render() {
     return (

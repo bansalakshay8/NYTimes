@@ -33,7 +33,7 @@ const App = createStackNavigator(
         headerLeft: null,
         headerRight:({}) => (
           <View>
-            <Icon style={{marginRight:10 }} size={20} name={'poweroff'}/>
+            <Icon style={{marginRight:10 }} size={15} name={'poweroff'}/>
           </View>
         )
       },

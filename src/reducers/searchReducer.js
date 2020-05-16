@@ -39,11 +39,11 @@ const searchReducer = (state = initialState, action) => {
       //return { ...state, searchError: "", searchResult: [...state.searchResult,...action.payload],searchCompleted:true,searching:false,searchedWords:[...searchedWords,state.wordToBeSearched] };
       if (state.wordToBeSearched != "") {
         let modifiedSearchedWord;
-        // if(state.searchedWords.length>5){
-        //   modifiedSearchedWord=[...state.searchedWords]
-        // }else{
+        if(state.searchedWords.length>4){
+          modifiedSearchedWord=state.searchedWords.slice(1).concat(state.wordToBeSearched)
+        }else{
           modifiedSearchedWord=[...state.searchedWords,state.wordToBeSearched]
-        // }
+        }
         return {
           ...state,
           searchError: "",
