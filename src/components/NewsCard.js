@@ -1,68 +1,95 @@
 import React, { Component } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { Card } from "react-native-elements";
+// import { useNavigation } from '@react-navigation/native';
 
 class NewsCard extends Component {
   render() {
-    if(this.props.customSearch!=true){
+    if (this.props.customSearch != true) {
       return (
-        <Card containerStyle={{ padding: 0, borderRadius: 10,flex:1 }}>
-          <Text
-            style={{
-              paddingHorizontal: 10,
-              paddingVertical: 5,
-              textAlign: "center",
-              fontWeight: "bold",
-            }}
-          >
+        <TouchableOpacity
+          style={Styles.cardContainerStyle}
+          onPress={() => this.categorizedSearchCardClicked(this.props.newsData)}
+        >
+          <Text style={Styles.categorizedSearchTextStyle}>
             {this.props.newsData.title}
           </Text>
           <Image
             source={{
               uri: this.props.newsData.multimedia[0].url,
             }}
-            //defaultSource={require("../images/nyt_logo.png")}
-            style={{
-              marginBottom: -1,
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
-              marginLeft: -1,
-              backgroundColor: '#f1eff0',
-              height: 145,
-              width: "100.5%",
-            }}
+            style={Styles.categorizedSearchImageStyle}
           ></Image>
-        </Card>
+        </TouchableOpacity>
       );
-    }else{
-      return  (
-        <Card containerStyle={{ padding: 0, borderRadius: 10,flex:1 }}>
-          <Text
-            style={{
-              paddingHorizontal: 20,
-              paddingTop: 10,
-              textAlign: "center",
-              fontWeight: "bold",
-              fontSize:16
-            }}
-          >
+    } else {
+      return (
+        <TouchableOpacity
+          style={Styles.cardContainerStyle}
+          onPress={() => this.customSearchCardClicked(this.props.newsData)}
+        >
+          <Text style={Styles.customSearchHeadingStyle}>
             {this.props.newsData.headline.main}
           </Text>
-          <Text
-            style={{
-              paddingHorizontal: 15,
-              paddingBottom: 10,
-              textAlign: "justify",
-              paddingTop:5,
-              // fontWeight: "bold",
-            }}
-          >
+          <Text style={Styles.customSearchDetailStyle}>
             {this.props.newsData.abstract}
           </Text>
-        </Card>
-      )
+        </TouchableOpacity>
+      );
     }
   }
+
+  categorizedSearchCardClicked = (cardData) => {
+    this.props.navigationProp.navigate("CategorizedNewsDetail", {
+      newsDetail: cardData,
+    });
+  };
+
+  customSearchCardClicked = (cardData) => {
+    this.props.navigationProp.navigate("CustomNewsDetail", {
+      newsDetail: cardData,
+    });
+  };
 }
+
+const Styles = StyleSheet.create({
+  cardContainerStyle: {
+    padding: 0,
+    borderRadius: 10,
+    flex: 1,
+    backgroundColor: "#ffffff",
+    width: "96%",
+    alignSelf: "center",
+    marginVertical: 5,
+  },
+  categorizedSearchTextStyle: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  categorizedSearchImageStyle: {
+    marginBottom: -1,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    marginLeft: -1,
+    backgroundColor: "#f1eff0",
+    height: 145,
+    width: "100.5%",
+  },
+  customSearchHeadingStyle: {
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  customSearchDetailStyle: {
+    paddingHorizontal: 15,
+    paddingBottom: 10,
+    textAlign: "justify",
+    paddingTop: 5,
+  },
+});
 
 export default NewsCard;

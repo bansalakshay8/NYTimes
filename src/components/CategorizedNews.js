@@ -13,11 +13,6 @@ import { fetchNewsAction, resetNewsAction } from "../actions";
 import NewsList from "./NewsList";
 
 class CatergorizedNews extends Component {
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (nextProps.isSearchTab == true) {
-  //     return { fromSearchTab: true };
-  //   } else return null;
-  // }
   checkError = () => {
     //console.log('for checking activity indicator')
     const { searchCompleted, searching, searchError } = this.props;
@@ -39,7 +34,12 @@ class CatergorizedNews extends Component {
       searching == false &&
       searchError == ""
     ) {
-      return <NewsList data={this.props.searchResult} />;
+      return (
+        <NewsList
+          data={this.props.searchResult}
+          navigationProp={this.props.navigationProp}
+        />
+      );
     }
   };
 

@@ -12,7 +12,7 @@ class WorldTab extends Component {
 
   shouldFetchNews=()=>{
     if(this.state.shouldShow){
-      return <CatergorizedNews searchTerm="world"/>
+      return <CatergorizedNews searchTerm="world" navigationProp={this.props.navigation}/>
     }
   } 
 

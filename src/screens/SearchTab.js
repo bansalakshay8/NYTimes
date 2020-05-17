@@ -86,6 +86,7 @@ class SearchTab extends Component {
           searching={searching}
           searchMore={this.searchMoreHandler}
           searchingMore={this.state.searchingMore}
+          navigationProp={this.props.navigation}
         />
       </View>
     );

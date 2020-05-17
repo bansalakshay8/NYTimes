@@ -12,7 +12,7 @@ class ScienceTab extends Component {
 
   shouldFetchNews=()=>{
     if(this.state.shouldShow){
-      return <CatergorizedNews searchTerm="science"/>
+      return <CatergorizedNews searchTerm="science" navigationProp={this.props.navigation}/>
     }
   } 
 

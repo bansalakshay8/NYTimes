@@ -42,6 +42,7 @@ class SearchResultComp extends Component {
             data={searchRes}
             customSearch={true}
             loadMore={this.loadMoreHandler}
+            navigationProp={this.props.navigationProp}
           />
         </View>
       );
@@ -72,6 +73,7 @@ class SearchResultComp extends Component {
             data={searchRes}
             customSearch={true}
             loadMore={this.loadMoreHandler}
+            navigationProp={this.props.navigationProp}
           />
           <ActivityIndicator size="small" color="#b30000" />
           <Text style={{ color: "#b30000" }}>Loading more news</Text>

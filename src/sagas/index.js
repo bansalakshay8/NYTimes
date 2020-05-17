@@ -12,6 +12,7 @@ import {
   makeLoginCall,
   makeSearchCall,
   makeCustomSearch,
+  fetchCommentCall,
 } from "../apis/api";
 import {
   REG_ACTION,
@@ -26,6 +27,9 @@ import {
   CUSTOM_NEWS_ACTION,
   CUSTOM_NEWS_SUCS,
   CUSTOM_NEWS_FAIL,
+  FETCH_COMMENTS_ACTION,
+  FETCH_COMMENTS_SUCS,
+  FETCH_COMMENTS_FAIL,
 } from "../actions/ActionTypes";
 
 export function* registerUser(action) {
@@ -105,6 +109,25 @@ export function* fetchCustomNews(action) {
   }
 }
 
+export function* fetchComments(action) {
+  try {
+    const resp = yield call(fetchCommentCall, action.payload);
+    if (resp.status == "OK") {
+      yield put({ type: FETCH_COMMENTS_SUCS, payload: resp.results.comments });
+    } else {
+      yield put({
+        type: FETCH_COMMENTS_FAIL,
+        payload: "Issue while fetching comments",
+      });
+    }
+  } catch (error) {
+    yield put({
+      type: FETCH_COMMENTS_FAIL,
+      payload: "Issue while fetching comments",
+    });
+  }
+}
+
 export function* regWatcher() {
   yield takeLatest(REG_ACTION, registerUser);
 }
@@ -119,11 +142,16 @@ export function* fetchNewsWatcher() {
 export function* customSearchWatcher() {
   yield takeLatest(CUSTOM_NEWS_ACTION, fetchCustomNews);
 }
+export function* fetchCommentWatcher() {
+  yield takeLatest(FETCH_COMMENTS_ACTION, fetchComments);
+}
+
 export default function* rootSaga() {
   yield all([
     call(regWatcher),
     call(loginWatcher),
     call(fetchNewsWatcher),
     call(customSearchWatcher),
+    call(fetchCommentWatcher),
   ]);
 }

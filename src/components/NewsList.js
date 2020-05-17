@@ -18,7 +18,7 @@ export default class NewsList extends React.Component {
         <FlatList
           data={this.props.data}
           renderItem={({ item }) => 
-            <NewsCard newsData={item} customSearch={this.props.customSearch}></NewsCard>
+            <NewsCard newsData={item} customSearch={this.props.customSearch} navigationProp={this.props.navigationProp}></NewsCard>
           }
           onEndReached={() => this.loadMoreData()}
           keyExtractor={(item, index) => index.toString()}
