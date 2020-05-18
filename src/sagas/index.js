@@ -7,12 +7,14 @@ import {
   takeEvery,
 } from "redux-saga/effects";
 import axios from "axios";
+import { decode as atob, encode as btoa } from "base-64";
 import {
   makeRegisterCall,
   makeLoginCall,
   makeSearchCall,
   makeCustomSearch,
   fetchCommentCall,
+  makeRefreshTokenCall,
 } from "../apis/api";
 import {
   REG_ACTION,
@@ -30,7 +32,11 @@ import {
   FETCH_COMMENTS_ACTION,
   FETCH_COMMENTS_SUCS,
   FETCH_COMMENTS_FAIL,
+  REFRESH_TOKEN_ACTION,
+  REFRESH_TOKEN_SUCCESS,
+  REFRESH_TOKEN_FAILURE,
 } from "../actions/ActionTypes";
+import { getToken, setToken } from "../apis/api";
 
 export function* registerUser(action) {
   try {
@@ -39,7 +45,6 @@ export function* registerUser(action) {
       password: action.payload.password,
     };
 
-    
     if (action.payload.email == "" || action.payload.password == "") {
       yield put({
         type: REG_FAL,
@@ -64,7 +69,7 @@ export function* loginUser(action) {
       email: action.payload.email,
       password: action.payload.password,
     };
-    
+
     // console.log("In Login SAGA");
     // console.log(response);
     if (action.payload.email == "" || action.payload.password == "") {
@@ -91,6 +96,10 @@ export function* loginUser(action) {
 
 export function* fetchNews(action) {
   try {
+    if (checkTokenExpiry()) {
+      yield put({ type: REFRESH_TOKEN_ACTION });
+    }
+
     const response = yield call(makeSearchCall, action.payload);
 
     if (response.status == "OK") {
@@ -105,6 +114,9 @@ export function* fetchNews(action) {
 
 export function* fetchCustomNews(action) {
   try {
+    if (checkTokenExpiry()) {
+      yield put({ type: REFRESH_TOKEN_ACTION });
+    }
     const resp = yield call(makeCustomSearch, action.payload);
     if (resp.status == "OK") {
       yield put({ type: CUSTOM_NEWS_SUCS, payload: resp.response.docs });
@@ -124,6 +136,9 @@ export function* fetchCustomNews(action) {
 
 export function* fetchComments(action) {
   try {
+    if (checkTokenExpiry()) {
+      yield put({ type: REFRESH_TOKEN_ACTION });
+    }
     const resp = yield call(fetchCommentCall, action.payload);
     if (resp.status == "OK") {
       yield put({ type: FETCH_COMMENTS_SUCS, payload: resp.results.comments });
@@ -139,6 +154,25 @@ export function* fetchComments(action) {
       payload: "Issue while fetching comments",
     });
   }
+}
+
+function checkTokenExpiry() {
+  console.log('çhecking token expiry')
+  let currToken = getToken();
+  let currTokenObj = JSON.parse(atob(currToken.split(".")[1]));
+  let now = Date.now().valueOf() / 1000;
+  if (typeof currTokenObj.exp !== "undefined" && currTokenObj.exp < now) {
+    return true;
+  } else if (
+    typeof currTokenObj.exp !== "undefined" &&
+    currTokenObj.exp > now
+  ) {
+    return false;
+  }
+}
+function* refreshTokenCall() {
+  const response = yield call(makeRefreshTokenCall);
+  setToken(response.access_token);
 }
 
 export function* regWatcher() {
@@ -158,6 +192,9 @@ export function* customSearchWatcher() {
 export function* fetchCommentWatcher() {
   yield takeLatest(FETCH_COMMENTS_ACTION, fetchComments);
 }
+export function* refreshTokenWatcher() {
+  yield takeLatest(REFRESH_TOKEN_ACTION, refreshTokenCall);
+}
 
 export default function* rootSaga() {
   yield all([
@@ -166,5 +203,6 @@ export default function* rootSaga() {
     call(fetchNewsWatcher),
     call(customSearchWatcher),
     call(fetchCommentWatcher),
+    call(refreshTokenWatcher),
   ]);
 }

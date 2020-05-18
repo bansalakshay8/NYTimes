@@ -6,6 +6,9 @@ let currentAuthToken = null;
 export function setToken(token) {
   currentAuthToken = token;
 }
+export function getToken() {
+  return currentAuthToken;
+}
 
 export async function makeRegisterCall(params) {
   return await axios({
@@ -26,8 +29,8 @@ export async function makeLoginCall(params) {
     method: "post",
     url: "http://192.168.43.244:8000/auth/login",
     data: {
-      "email": "nilson@email.com",
-      "password":"nilson"
+      email: "nilson@email.com",
+      password: "nilson",
     },
   })
     .then((response) => {
@@ -42,7 +45,7 @@ export async function makeSearchCall(params) {
   let NYURL = `https://api.nytimes.com/svc/topstories/v2/${params.searchText}.json?api-key=ieafWZelkDeAP0YI9UbeNFTFFyvdfeBn`;
 
   console.log("URL is:" + NYURL);
-  console.log("currentAuthToken is"+currentAuthToken)
+  console.log("currentAuthToken is " + currentAuthToken);
   return await axios
     .get(NYURL, { headers: { Authorization: `Bearer ${currentAuthToken}` } })
     .then((response) => {
@@ -58,7 +61,7 @@ export async function makeCustomSearch(payloadObj) {
   let NYURL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${queryString}&page=${payloadObj.index}&sort=newest&api-key=ieafWZelkDeAP0YI9UbeNFTFFyvdfeBn`;
 
   console.log("make custom search URL is:" + NYURL);
-   return await axios
+  return await axios
     .get(NYURL, { headers: { Authorization: `Bearer ${currentAuthToken}` } })
     .then((response) => {
       return response.data;
@@ -74,6 +77,23 @@ export async function fetchCommentCall(payloadObj) {
   console.log("make comment search URL is:" + NYURL);
   return await axios
     .get(NYURL, { headers: { Authorization: `Bearer ${currentAuthToken}` } })
+    .then((response) => {
+      return response.data;
+    })
+    .catch(function (error) {
+      return error;
+    });
+}
+
+export async function makeRefreshTokenCall() {
+  return await axios({
+    method: "post",
+    url: "http://192.168.43.244:8000/auth/login",
+    data: {
+      email: "nilson@email.com",
+      password: "nilson",
+    },
+  })
     .then((response) => {
       return response.data;
     })
