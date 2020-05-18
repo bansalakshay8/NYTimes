@@ -8,6 +8,7 @@ This repository contains codebase for "NY Times Most Popular Articles".
 with local server using this repo -> https://github.com/techiediaries/fake-api-jwt-jsonserver
 - The token fetched from login call, is being passed through all NY Times requests in Authorization JWT Bearer token header.
 - A middleware has been implemented to send the token.
+- JWT bearer token expiry is checked during each network call to NYTIMES API and if expired, the token is refreshed using middleware. 
 - User can either select to see categorized top news(World or Science) or search for articles. Three tabs(World,Science,Search News) has been created for same.
 - On click of "World" and "Science" tab , top news of each category is automatically loaded.
 - When user clicks on any of the article in the World or Science tab, news detail is shown and where news title,detail,image related to the news ,link to original article and comments for that article are shown.
@@ -39,8 +40,10 @@ So I have used following object for login in the backend:
 
 `git clone https://github.com/bansalakshay8/NYTimes`
 
-- Goto project folder in command prompt and run `npm install` and `npm cache clean --force`
-- Also run `cd android & gradlew clean`
+- Now find the IP on which your local auth server is running.
+- Goto `NYTimes\src\apis\api.js` and assign the ip to `LOCAL_IP` variable.
+- Goto project folder in command prompt and run `npm install` and `npm cache clean --force`.
+- Also run `cd android & gradlew clean`.
 - Now go to main project folder and run `react-native run-android` to run the android app on your configured avd in debug mode.
 
 
