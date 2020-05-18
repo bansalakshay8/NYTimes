@@ -4,7 +4,7 @@ This repository contains codebase for "NY Times Most Popular Articles".
 
 Steps to run:
 
--As this app uses local JWT authentication, first we need to setup local auth server from https://github.com/techiediaries/fake-api-jwt-json-server and start the server as mentioned in the project.
+- As this app uses local JWT authentication, first we need to setup local auth server from https://github.com/techiediaries/fake-api-jwt-json-server and start the server as mentioned in the project.
 
 But there is two issues with this local JWT authentication.
 1. Registration URL : http://{LOCAL IP}:8000/auth/register is working fine but login URL http://{LOCAL IP}:8000/auth/login is working only for some specific data.
