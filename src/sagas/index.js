@@ -39,14 +39,19 @@ export function* registerUser(action) {
       password: action.payload.password,
     };
 
-    // const response = yield axios.post("http://localhost:8000/auth/register", params);
-    const response = yield call(makeRegisterCall, params);
-    // console.log("In Register SAGA");
-    // console.log(response);
-    if (response.access_token == undefined) {
-      yield put({ type: REG_FAL, payload: "Issue while registeration" });
+    
+    if (action.payload.email == "" || action.payload.password == "") {
+      yield put({
+        type: REG_FAL,
+        payload: "Please enter mandatory credentials",
+      });
     } else {
-      yield put({ type: REG_SUC, payload: response.access_token });
+      const response = yield call(makeRegisterCall, params);
+      if (response.access_token == undefined) {
+        yield put({ type: REG_FAL, payload: "Issue while registeration" });
+      } else {
+        yield put({ type: REG_SUC, payload: response.access_token });
+      }
     }
   } catch (error) {
     yield put({ type: REG_FAL, payload: "Issue while registeration" });
@@ -59,17 +64,25 @@ export function* loginUser(action) {
       email: action.payload.email,
       password: action.payload.password,
     };
-    const response = yield call(makeLoginCall, params);
+    
     // console.log("In Login SAGA");
     // console.log(response);
-    if (response.access_token == undefined) {
-      if (response.message != undefined) {
-        yield put({ type: LOGIN_FAL, payload: response.message });
-      } else {
-        yield put({ type: LOGIN_FAL, payload: "Issue while signing-in" });
-      }
+    if (action.payload.email == "" || action.payload.password == "") {
+      yield put({
+        type: LOGIN_FAL,
+        payload: "Please enter mandatory credentials",
+      });
     } else {
-      yield put({ type: LOGIN_SUC, payload: response.access_token });
+      const response = yield call(makeLoginCall, params);
+      if (response.access_token == undefined) {
+        // if (response.message != undefined) {
+        //   yield put({ type: LOGIN_FAL, payload: response.message });
+        // } else {
+        yield put({ type: LOGIN_FAL, payload: "Issue while signing-in" });
+        // }
+      } else {
+        yield put({ type: LOGIN_SUC, payload: response.access_token });
+      }
     }
   } catch (error) {
     yield put({ type: LOGIN_FAL, payload: "Issue while signing-in" });

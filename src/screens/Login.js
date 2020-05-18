@@ -117,6 +117,14 @@ class Login extends Component {
       password:this.state.password
     })
   }
+  componentDidMount() {
+    this.blurListener = this.props.navigation.addListener("didBlur", () => {
+      this.props.doReset();
+    });
+  }
+  componentWillUnmount() {
+    this.blurListener.remove();
+  }
 }
 
 const Styles = StyleSheet.create({
@@ -201,6 +209,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     doLogin: (credentials) => {
       dispatch(loginAction(credentials));
+    },
+    doReset: () => {
+      dispatch(resetLoginAction());
     },
   };
 };

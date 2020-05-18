@@ -8,7 +8,7 @@
  */
 
 import React from "react";
-import {View} from 'react-native';
+import {View,TouchableOpacity} from 'react-native';
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 
@@ -19,26 +19,17 @@ import CustomNewsDetail from './src/screens/CustomNewsDetail';
 import CategorizedNewsDetail from './src/screens/CategorizedNewsDetail';
 
 import Icon from "react-native-vector-icons/AntDesign";
+import IconI from "react-native-vector-icons/Ionicons";
 
 const App = createStackNavigator(
   {
     Login: { screen: Login },
-    Register : {screen: Register},
+    Register : {
+      screen: Register,
+    },
     Dashboard : {
       screen: Dashboard,
-      navigationOptions: {
-        title: "NEW YORK TIMES",
-        headerStyle: {
-          backgroundColor: '#9a9a9a',
-        },
-        headerTitleAlign:'center',
-        headerLeft: null,
-        headerRight:({}) => (
-          <View>
-            <Icon style={{marginRight:10 }} size={15} name={'poweroff'}/>
-          </View>
-        )
-      },
+      navigationOptions: { header: null }
     },
     CustomNewsDetail : {
       screen: CustomNewsDetail,

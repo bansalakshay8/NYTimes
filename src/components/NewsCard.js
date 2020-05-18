@@ -43,6 +43,7 @@ class NewsCard extends Component {
     this.props.navigationProp.navigate("CategorizedNewsDetail", {
       newsDetail: cardData,
     });
+    // this.props.navigationProp.navigate("SampleNews")
   };
 
   customSearchCardClicked = (cardData) => {

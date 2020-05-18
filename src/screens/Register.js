@@ -7,15 +7,16 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
+  Alert
 } from "react-native";
 
 import IconF from "react-native-vector-icons/Fontisto";
 import IconFA from "react-native-vector-icons/FontAwesome";
 import IconI from "react-native-vector-icons/Ionicons";
 import { Image } from "react-native-elements";
-import Spinner from 'react-native-loading-spinner-overlay';
+import Spinner from "react-native-loading-spinner-overlay";
 
-import { regAction,resetRegAction } from "../actions/index";
+import { regAction, resetRegAction } from "../actions/index";
 import { connect } from "react-redux";
 
 class Register extends Component {
@@ -34,15 +35,22 @@ class Register extends Component {
   render() {
     return (
       <View style={Styles.container}>
+        <IconI
+          name="md-arrow-round-back"
+          size={25}
+          color="black"
+          style={{ position: 'absolute', top: 10,left:10 }}
+          onPress={() => this.backPress()}
+        />
         <Spinner
           //visibility of Overlay Loading Spinner
           visible={this.props.regLoading}
-          //Text with the Spinner 
-          textContent={'Registering user...'}
+          //Text with the Spinner
+          textContent={"Registering user..."}
           //Text style of the Spinner Text
-          textStyle={{color: '#FFF'}}
+          textStyle={{ color: "#FFF" }}
         />
-        <IconI name="md-arrow-round-back" size={25} color="black" style={{marginLeft:10,marginTop:10}} onPress={() => this.backPress()} />
+
         <View style={Styles.logoStyle}>
           <Image
             source={require("../images/nyt_logo.png")}
@@ -101,10 +109,16 @@ class Register extends Component {
           {this.props.regSuccessful != "" &&
           this.props.regError == "" &&
           this.props.regLoading == false ? (
-            alert('Registration successful'),this.props.resetRegistration(),this.props.navigation.goBack()
-          ) : (<Text style={{color: '#b30000'}}>{this.props.regError}</Text>
+            (Alert.alert("Registraction","Registration Successful",)),
+            this.props.resetRegistration(),
+            this.props.navigation.goBack()
+          ) : (
+            <Text style={{ color: "#b30000" }}>{this.props.regError}</Text>
           )}
-          <TouchableOpacity style={Styles.loginBtnStyle} onPress={this.doRegister}>
+          <TouchableOpacity
+            style={Styles.loginBtnStyle}
+            onPress={this.doRegister}
+          >
             <Text style={{ color: "white", textAlign: "center", fontSize: 16 }}>
               Register
             </Text>
@@ -113,21 +127,21 @@ class Register extends Component {
       </View>
     );
   }
-  doRegister=()=>{
+  doRegister = () => {
     this.props.regDispatch({
-        email:this.state.email,
-        password:this.state.password
-    })
-  }
-  backPress=()=>{
-      this.props.navigation.goBack();
-  }
+      email: this.state.email,
+      password: this.state.password,
+    });
+  };
+  backPress = () => {
+    this.props.navigation.goBack();
+  };
 }
 
 const Styles = StyleSheet.create({
   container: {
     flex: 1,
-    //justifyContent: "center",
+    justifyContent: "center",
     backgroundColor: "#9a9a9a",
   },
   loginContainer: {
@@ -193,23 +207,23 @@ const Styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-    return {
-        regSuccessful:state.authReducer.regSuccessful,
-        regError:state.authReducer.error,
-        regLoading:state.authReducer.loading
-    };
+  return {
+    regSuccessful: state.authReducer.regSuccessful,
+    regError: state.authReducer.error,
+    regLoading: state.authReducer.loading,
   };
-  
-  const mapDispatchToProps = (dispatch) => {
-    return {
-      regDispatch: (credentials) => {
-        dispatch(regAction(credentials));
-      },
-      resetRegistration: () => {
-        dispatch(resetRegAction());
-      },
-    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    regDispatch: (credentials) => {
+      dispatch(regAction(credentials));
+    },
+    resetRegistration: () => {
+      dispatch(resetRegAction());
+    },
   };
+};
 
 const regContainer = connect(mapStateToProps, mapDispatchToProps)(Register);
 export default regContainer;

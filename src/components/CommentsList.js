@@ -9,23 +9,34 @@ class CommentsList extends Component {
         <Text style={{ alignSelf: "center", fontWeight: "bold", fontSize: 16 }}>
           Comments
         </Text>
-        <FlatList
+        <View>
+          <FlatList
             // style={{paddingBottom:20}}
-          data={this.props.commentsData}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => this.renderComment(item)}
-        />
+            data={this.props.commentsData}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => this.renderComment(item)}
+            nestedScrollEnabled
+          />
+        </View>
       </View>
     );
   }
   renderComment = (comment) => {
     return (
       <View style={Styles.commentContainer}>
-        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text style={Styles.usernameStyle}>{comment.userDisplayName}</Text>
-          <View style={{ flexDirection: "row",alignItems:'center',paddingRight:10}}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              paddingRight: 10,
+            }}
+          >
             <Icon name="location-pin" size={15} color="grey" />
-            <Text style={{fontWeight:'bold',color:"grey"}}>{comment.userLocation}</Text>
+            <Text style={{ fontWeight: "bold", color: "grey" }}>
+              {comment.userLocation}
+            </Text>
           </View>
         </View>
         <Text style={Styles.commentTextStyle}>{comment.commentBody}</Text>
@@ -42,7 +53,7 @@ const Styles = StyleSheet.create({
   },
   commentTextStyle: {
     padding: 10,
-    textAlign:'justify'
+    textAlign: "justify",
   },
   usernameStyle: {
     fontWeight: "bold",

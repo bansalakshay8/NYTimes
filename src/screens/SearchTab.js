@@ -6,13 +6,15 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  BackHandler,
+  Alert,
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import IconF from "react-native-vector-icons/Fontisto";
 import SearchResultComp from "../components/SearchResultComp";
 import { connect } from "react-redux";
 
-import { fetchCustomNewsAction, resetCustomNewsAction } from "../actions";
+import { fetchCustomNewsAction, resetCustomNewsAction,resetLoginAction } from "../actions";
 
 class SearchTab extends Component {
   constructor(props) {
@@ -53,15 +55,17 @@ class SearchTab extends Component {
               alignSelf: "flex-start",
               marginHorizontal: 10,
               flexDirection: "row",
-              flexWrap: 'wrap'
+              flexWrap: "wrap",
             }}
           >
-            <Text style={{color:'#fff'}}>Recent Searches :</Text>
+            <Text style={{ color: "#fff" }}>Recent Searches :</Text>
             {searchedWords.map((word) => {
               return (
-                <TouchableOpacity onPress={()=>{
-                  this.pressedHistory(word)
-                }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.pressedHistory(word);
+                  }}
+                >
                   <View
                     style={{
                       backgroundColor: "#b30000",
@@ -106,16 +110,21 @@ class SearchTab extends Component {
     );
   };
 
-  
-  pressedHistory=(word)=>{
-    this.setState({
-      searchTerm:word,
-      index: 0,
-      searchingMore: false,
-    },()=>{
-      this.props.fetchNews({ searchTerm:this.state.searchTerm, index: this.state.index });
-    })
-  }
+  pressedHistory = (word) => {
+    this.setState(
+      {
+        searchTerm: word,
+        index: 0,
+        searchingMore: false,
+      },
+      () => {
+        this.props.fetchNews({
+          searchTerm: this.state.searchTerm,
+          index: this.state.index,
+        });
+      },
+    );
+  };
   searchChanged = (searchTerm) => {
     //console.log('inside searchChanged')
     this.setState(
@@ -136,7 +145,11 @@ class SearchTab extends Component {
   };
   componentDidMount() {
     const { navigation } = this.props;
+    this.focusListener = navigation.addListener("didFocus", () => {
+      BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+    });
     this.blurListener = navigation.addListener("didBlur", () => {
+      BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
       this.setState({
         searchTerm: "",
         index: 0,
@@ -146,7 +159,30 @@ class SearchTab extends Component {
     });
   }
   componentWillUnmount() {
+    this.focusListener.remove();
     this.blurListener.remove();
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick=()=> {
+    Alert.alert(  
+      'Logout',  
+      'Do you want to logout?',  
+      [  
+          {  
+              text: 'Cancel',  
+              onPress: () => {return},  
+              style: 'cancel',  
+          },  
+          {text: 'OK', 
+            onPress: () => {
+              this.props.doLogout();
+              this.props.navigation.navigate('Login');
+            }
+          },  
+      ]  
+    )
+    return true;  
   }
 }
 
@@ -194,6 +230,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     resetNews: () => {
       dispatch(resetCustomNewsAction());
+    },
+    doLogout: () => {
+      dispatch(resetLoginAction());
     },
   };
 };

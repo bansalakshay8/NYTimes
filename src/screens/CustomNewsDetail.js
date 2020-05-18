@@ -7,6 +7,7 @@ import {
   Button,
   Linking,
   ActivityIndicator,
+  ScrollView
 } from "react-native";
 import { fetchCommentAction, resetCommentAction } from "../actions";
 import { connect } from "react-redux";
@@ -24,7 +25,7 @@ class CustomNewsDetail extends Component {
     const { newsData } = this.state;
     if (Object.keys(newsData).length != 0) {
       return (
-        <View style={Styles.container}>
+        <ScrollView contentContainerStyle={Styles.container}>
           <Text style={Styles.headerStyle}>{newsData.headline.main}</Text>
           {newsData.byline != undefined && (
             <Text style={Styles.byStyle}>{newsData.byline.original}</Text>
@@ -51,7 +52,7 @@ class CustomNewsDetail extends Component {
             }}
           />
           {this.renderComments()}
-        </View>
+        </ScrollView>
       );
     } else {
       return null;
@@ -140,9 +141,7 @@ class CustomNewsDetail extends Component {
 
 const Styles = StyleSheet.create({
   container: {
-    flex: 1,
-    // justifyContent: "center",
-    // alignItems: "flex-end",
+    // flex: 1,
     margin: 16,
   },
   headerStyle: {
