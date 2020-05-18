@@ -17,4 +17,5 @@ So I have used following object for login in the backend:
 2. I am able to register/login on local JWT server using debug apk but release apk is unable to ping that URL.
 
 - Now clone this repository on local using
-git clone https://github.com/bansalakshay8/NYTimes
+
+"git clone https://github.com/bansalakshay8/NYTimes"
