@@ -46,9 +46,9 @@ So I have used following object for login in the backend:
 
 Following libararies/modules are used in the project:-
 
-axios : for making http calls
-react-navigation v4 : for navigation
-react-native-elements : for material UI
-react-native-vector-icons : for icons
-redux : for data persistence in the form of global state
-redux-saga : for asychronous handling in redux
+- axios : for making http calls
+- react-navigation v4 : for navigation
+- react-native-elements : for material UI
+- react-native-vector-icons : for icons
+- redux : for data persistence in the form of global state
+- redux-saga : for asychronous handling in redux
