@@ -2,6 +2,7 @@ import axios from "axios";
 import { store } from "../../store";
 
 let currentAuthToken = null;
+const LOCAL_IP="192.168.43.244";
 
 export function setToken(token) {
   currentAuthToken = token;
@@ -13,7 +14,7 @@ export function getToken() {
 export async function makeRegisterCall(params) {
   return await axios({
     method: "post",
-    url: "http://192.168.43.244:8000/auth/register",
+    url: `http://${LOCAL_IP}:8000/auth/register`,
     data: params,
   })
     .then((response) => {
@@ -27,7 +28,7 @@ export async function makeRegisterCall(params) {
 export async function makeLoginCall(params) {
   return await axios({
     method: "post",
-    url: "http://192.168.43.244:8000/auth/login",
+    url: `http://${LOCAL_IP}:8000/auth/login`,
     data: {
       email: "nilson@email.com",
       password: "nilson",
@@ -88,7 +89,7 @@ export async function fetchCommentCall(payloadObj) {
 export async function makeRefreshTokenCall() {
   return await axios({
     method: "post",
-    url: "http://192.168.43.244:8000/auth/login",
+    url: `http://${LOCAL_IP}:8000/auth/login`,
     data: {
       email: "nilson@email.com",
       password: "nilson",
