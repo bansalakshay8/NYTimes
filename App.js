@@ -29,7 +29,7 @@ const App = createStackNavigator(
     },
     Dashboard : {
       screen: Dashboard,
-      navigationOptions: { header: null }
+      navigationOptions: { headerShown: false }
     },
     CustomNewsDetail : {
       screen: CustomNewsDetail,
@@ -54,11 +54,6 @@ const App = createStackNavigator(
           backgroundColor: '#9a9a9a',
         },
         headerTitleAlign:'center',
-        headerRight:({}) => (
-          <View>
-            <Icon style={{marginRight:10 }} size={15} name={'poweroff'}/>
-          </View>
-        )
       },
     }
   },
