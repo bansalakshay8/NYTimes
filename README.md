@@ -43,7 +43,7 @@ Clone the repository on your local system and run `npm install` and `npm run sta
 - Goto `NYTimes\src\apis\api.js` and assign the ip to `LOCAL_IP` variable.
 - Goto project folder in command prompt and run `npm install` and `npm cache clean --force`.
 - Also run `cd android & gradlew clean`.
-- Now go to main project folder and run `react-native run-android` to run the android app on your configured avd in debug mode.
+- Now go to main project folder and run `react-native run-android` to run the android app on your configured avd in debug mode and you can also create build apk using keystore.
 
 
 ## Libararies/Modules used
