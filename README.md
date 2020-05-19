@@ -17,7 +17,7 @@ with local server using this repo -> https://github.com/techiediaries/fake-api-j
 - Pagination has been implemented in search results screen to fetch more results while scrolling down.
 - When user clicks on any of the article in the search result, news detail is shown and where news title,detail, link to original article and comments for that article are shown.
 - Spinner has also been implemented whenever we are making a network call.
-
+- Best coding practices has been used and proper modules are created for better readability.
 
 ## Steps to run:
 
