@@ -7,15 +7,29 @@ import {
   Button,
   Linking,
   ActivityIndicator,
-  ScrollView
+  ScrollView,
+  TouchableOpacity,
 } from "react-native";
 
 import { fetchCommentAction, resetCommentAction } from "../actions";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import IconA from "react-native-vector-icons/AntDesign";
 import CommentsList from "../components/CommentsList";
 
 class CategorizedNewsDetail extends Component {
+  // logoutClicked=()=>{
+  //   alert("LOGOUT clicked")
+  // }
+
+  static navigationOptions = {
+    headerRight: ({}) => (
+      <TouchableOpacity>
+        <IconA style={{ marginRight: 10 }} size={15} name={"poweroff"} />
+      </TouchableOpacity>
+    ),
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -153,8 +167,8 @@ const Styles = StyleSheet.create({
     // justifyContent: "center",
     // alignItems: "flex-end",
     margin: 16,
-    paddingBottom:20
-  },  
+    paddingBottom: 20,
+  },
   headerStyle: {
     fontSize: 19,
     fontWeight: "bold",
