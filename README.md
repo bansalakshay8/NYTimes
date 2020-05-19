@@ -55,3 +55,8 @@ So I have used following object for login in the backend:
 - react-native-vector-icons : for icons
 - redux : for data persistence in the form of global state
 - redux-saga : for asychronous handling in redux
+
+## Unit Testing and code coverage
+
+- Run `npm test` to run the unit test cases. As of now, I have written test cases only to test action creators and reducers. Will be adding more.
+- Run `npm test -- --coverage` to test the check the code coverage of the test cases written.
