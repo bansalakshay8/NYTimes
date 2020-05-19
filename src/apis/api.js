@@ -1,5 +1,4 @@
 import axios from "axios";
-import { store } from "../../store";
 
 let currentAuthToken = null;
 const LOCAL_IP="192.168.43.244";
