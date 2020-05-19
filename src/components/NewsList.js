@@ -21,7 +21,7 @@ export default class NewsList extends React.Component {
             <NewsCard newsData={item} customSearch={this.props.customSearch} navigationProp={this.props.navigationProp}></NewsCard>
           }
           onEndReached={() => this.loadMoreData()}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item, index) => item.uri}
           // ListFooterComponent={this.renderFooter()}
         />
       </View>
