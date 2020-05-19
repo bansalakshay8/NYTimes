@@ -65,7 +65,6 @@ dashNavigator.navigationOptions = ({ navigation }) => {
     //   backgroundColor: "#9a9a9a",
     // },
     // headerTitleAlign: "center",
-    // headerLeft: null,
     // headerRight: ({}) => (
     //   <TouchableOpacity
     //     onPress={() => {
@@ -100,7 +99,7 @@ const dashboardStack = createStackNavigator({
         backgroundColor: "#9a9a9a",
       },
       headerTitleAlign: "center",
-      headerLeft: null,
+      headerLeft: ()=>{return null},
       headerRight: ({}) => (
         <TouchableOpacity
           onPress={() => {
