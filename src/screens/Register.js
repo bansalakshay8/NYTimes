@@ -1,3 +1,5 @@
+/*This file contains view component to display the screen for registration.*/
+
 /* eslint-disable prettier/prettier */
 import React, { Component } from "react";
 import {

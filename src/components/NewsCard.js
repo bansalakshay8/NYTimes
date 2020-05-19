@@ -1,3 +1,6 @@
+/* This file contains component to display news cards in case of categorized news 
+as well as search news results*/
+
 import React, { Component } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { Card } from "react-native-elements";
@@ -39,13 +42,14 @@ class NewsCard extends Component {
     }
   }
 
+  //handler function on click of card in categorized news
   categorizedSearchCardClicked = (cardData) => {
     this.props.navigationProp.navigate("CategorizedNewsDetail", {
       newsDetail: cardData,
     });
     // this.props.navigationProp.navigate("SampleNews")
   };
-
+//handler function on click of card in search news 
   customSearchCardClicked = (cardData) => {
     this.props.navigationProp.navigate("CustomNewsDetail", {
       newsDetail: cardData,

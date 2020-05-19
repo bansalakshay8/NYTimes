@@ -1,3 +1,5 @@
+/*This file contains view component to display the screen for world tab.*/
+
 import React, { Component } from "react";
 import { View, Text, Button, StyleSheet,BackHandler,Alert } from "react-native";
 import CatergorizedNews from "../components/CategorizedNews";
@@ -45,6 +47,8 @@ class WorldTab extends Component {
     this.blurListener.remove();
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
+
+  //function to handle on click of hardware back button press
   handleBackButtonClick=()=> {
     Alert.alert(  
       'Logout',  

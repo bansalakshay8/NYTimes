@@ -1,3 +1,4 @@
+/*Saga to handle fetch comment action*/
 import {
   FETCH_COMMENTS_SUCS,
   FETCH_COMMENTS_FAIL,

@@ -1,3 +1,4 @@
+/*container for Login component to connect it to Redux*/
 import Login from '../views/Login';
 import {authAction} from '../actions';
 import {connect} from 'react-redux';

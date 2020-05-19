@@ -1,3 +1,5 @@
+/*This file contains view component to display the screen for science tab.*/
+
 import React, { Component } from "react";
 import {
   View,
@@ -14,7 +16,11 @@ import IconF from "react-native-vector-icons/Fontisto";
 import SearchResultComp from "../components/SearchResultComp";
 import { connect } from "react-redux";
 
-import { fetchCustomNewsAction, resetCustomNewsAction,resetLoginAction } from "../actions";
+import {
+  fetchCustomNewsAction,
+  resetCustomNewsAction,
+  resetLoginAction,
+} from "../actions";
 
 class SearchTab extends Component {
   constructor(props) {
@@ -95,6 +101,8 @@ class SearchTab extends Component {
       </View>
     );
   }
+
+  //function to handle pagination when user scrolls down to end of flatlist
   searchMoreHandler = () => {
     this.setState(
       {
@@ -110,6 +118,7 @@ class SearchTab extends Component {
     );
   };
 
+  //function to handle on click on any of the words in search history
   pressedHistory = (word) => {
     this.setState(
       {
@@ -125,6 +134,8 @@ class SearchTab extends Component {
       },
     );
   };
+
+  //function to make search api call when user is entering text in textbox
   searchChanged = (searchTerm) => {
     //console.log('inside searchChanged')
     this.setState(
@@ -146,10 +157,16 @@ class SearchTab extends Component {
   componentDidMount() {
     const { navigation } = this.props;
     this.focusListener = navigation.addListener("didFocus", () => {
-      BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+      BackHandler.addEventListener(
+        "hardwareBackPress",
+        this.handleBackButtonClick,
+      );
     });
     this.blurListener = navigation.addListener("didBlur", () => {
-      BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+      BackHandler.removeEventListener(
+        "hardwareBackPress",
+        this.handleBackButtonClick,
+      );
       this.setState({
         searchTerm: "",
         index: 0,
@@ -161,29 +178,32 @@ class SearchTab extends Component {
   componentWillUnmount() {
     this.focusListener.remove();
     this.blurListener.remove();
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    BackHandler.removeEventListener(
+      "hardwareBackPress",
+      this.handleBackButtonClick,
+    );
   }
 
-  handleBackButtonClick=()=> {
-    Alert.alert(  
-      'Logout',  
-      'Do you want to logout?',  
-      [  
-          {  
-              text: 'Cancel',  
-              onPress: () => {return},  
-              style: 'cancel',  
-          },  
-          {text: 'OK', 
-            onPress: () => {
-              this.props.doLogout();
-              this.props.navigation.navigate('Login');
-            }
-          },  
-      ]  
-    )
-    return true;  
-  }
+  //function to handle on click of back button
+  handleBackButtonClick = () => {
+    Alert.alert("Logout", "Do you want to logout?", [
+      {
+        text: "Cancel",
+        onPress: () => {
+          return;
+        },
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        onPress: () => {
+          this.props.doLogout();
+          this.props.navigation.navigate("Login");
+        },
+      },
+    ]);
+    return true;
+  };
 }
 
 const styles = StyleSheet.create({

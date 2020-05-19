@@ -1,3 +1,4 @@
+/*Redux reducer for handling login related actions*/
 import {
   LOGIN_ACTION,
   LOGIN_SUC,

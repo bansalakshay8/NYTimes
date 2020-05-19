@@ -1,3 +1,4 @@
+/*Redux reducer for handling comment related actions*/
 import {
   FETCH_COMMENTS_ACTION,
   FETCH_COMMENTS_SUCS,

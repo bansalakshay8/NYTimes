@@ -1,3 +1,4 @@
+/* This file contains component to display comments in the form of list(FLatlist).*/
 import React, { Component } from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
@@ -21,6 +22,7 @@ class CommentsList extends Component {
       </View>
     );
   }
+  //function to render each of the individual comment
   renderComment = (comment) => {
     return (
       <View style={Styles.commentContainer}>

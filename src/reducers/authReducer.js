@@ -1,3 +1,4 @@
+/*Redux reducer for handling registration related actions*/
 import {
   REG_ACTION,
   REG_SUC,

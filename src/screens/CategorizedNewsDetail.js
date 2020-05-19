@@ -1,3 +1,6 @@
+/*This file contains view component to display the screen for news details
+in case of categorized news.*/
+
 import React, { Component } from "react";
 import {
   View,
@@ -80,7 +83,7 @@ class CategorizedNewsDetail extends Component {
       return null;
     }
   }
-
+//function to render comments
   renderComments = () => {
     const {
       commentsError,
@@ -143,6 +146,7 @@ class CategorizedNewsDetail extends Component {
     }
   };
 
+  //function when user clicks on "read full news"
   readFullClicked = (url) => {
     Linking.openURL(url);
   };

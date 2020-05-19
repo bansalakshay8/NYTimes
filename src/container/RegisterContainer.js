@@ -1,3 +1,4 @@
+/*container for Register component to connect it to Redux*/
 import Register from "../screens/Register";
 import { regUser } from "../actions";
 import { connect } from "react-redux";

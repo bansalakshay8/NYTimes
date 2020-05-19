@@ -1,3 +1,4 @@
+/* This file contains component to show the categorized(World/Science) news in the form of list. */
 import React, { Component } from "react";
 import {
   View,
@@ -13,6 +14,7 @@ import { fetchNewsAction, resetNewsAction } from "../actions";
 import NewsList from "./NewsList";
 
 class CatergorizedNews extends Component {
+  //function to check if the fetching news is successful or is there any error
   checkError = () => {
     //console.log('for checking activity indicator')
     const { searchCompleted, searching, searchError } = this.props;

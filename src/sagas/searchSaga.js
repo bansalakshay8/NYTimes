@@ -1,3 +1,4 @@
+/*Saga to handle search news action*/
 import {
   CUSTOM_NEWS_SUCS,
   CUSTOM_NEWS_FAIL,

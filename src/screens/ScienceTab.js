@@ -1,3 +1,5 @@
+/*This file contains view component to display the screen for science tab.*/
+
 import React, { Component } from "react";
 import { View, Text, Button, StyleSheet,BackHandler,Alert } from "react-native";
 import CatergorizedNews from "../components/CategorizedNews";
@@ -46,6 +48,8 @@ class ScienceTab extends Component {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
 
+
+  //function to handle back button click on science tab
   handleBackButtonClick=()=> {
     Alert.alert(  
       'Logout',  

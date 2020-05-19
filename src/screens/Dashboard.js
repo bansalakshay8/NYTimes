@@ -1,3 +1,7 @@
+/*This file contains view component to display the screen for dashboard
+when user logs in. This dashboard contains a tab navigation to display 
+"World","Science","Search News" tabs.*/
+
 /* eslint-disable prettier/prettier */
 import React from "react";
 import { View, TouchableOpacity } from "react-native";

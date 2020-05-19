@@ -1,3 +1,6 @@
+/* This file contains component to display the search news results 
+in the form of list(NewsList)*/
+
 import React, { Component } from "react";
 import {
   View,

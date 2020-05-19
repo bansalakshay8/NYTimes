@@ -1,3 +1,5 @@
+/*This file contains string for each of the action types which are used throughout the app.*/
+
 export const REG_ACTION='REGISTER_USER';
 export const REG_SUC='REGISTER_SUCCESS';
 export const REG_FAL='REGISTER_FAILURE';

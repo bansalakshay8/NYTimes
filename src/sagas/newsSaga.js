@@ -1,3 +1,4 @@
+/*Saga to handle fetch categorized news action*/
 import {
   FETCH_NEWS_SUCS,
   FETCH_NEWS_FAIL,

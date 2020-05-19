@@ -1,3 +1,6 @@
+/*This file contains view component to display the screen for news details when 
+user clicks on any of the search result.*/
+
 import React, { Component } from "react";
 import {
   View,
@@ -121,6 +124,7 @@ class CustomNewsDetail extends Component {
     }
   };
 
+  //function to handle on click on "read full news"
   readFullClicked = (url) => {
     Linking.openURL(url);
   };

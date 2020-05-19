@@ -1,3 +1,4 @@
+/*Saga to handle user registration action*/
 import { REG_SUC, REG_FAL } from "../actions/ActionTypes";
 import { put, call } from "redux-saga/effects";
 import { makeRegisterCall } from "../apis/api";

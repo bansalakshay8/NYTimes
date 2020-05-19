@@ -1,3 +1,6 @@
+/* This file contains component to display the news list in 
+categorized tab as well as search news tab */
+
 import React from "react";
 import { StyleSheet, FlatList, Text, View, Alert } from "react-native";
 import NewsCard from "./NewsCard";
